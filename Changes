@@ -1,0 +1,9 @@
+Revision history for Perl module Games::GuessWord
+
+0.14 Wed Jan  2 15:50:21 GMT 2002
+	- created and released first version as Games::WordGuess has
+	disapeared from CPAN. As a bonus, it's got a cleaner interface
+	and uses less memory
+
+
+
