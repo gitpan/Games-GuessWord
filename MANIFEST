@@ -3,5 +3,7 @@ MANIFEST
 Makefile.PL
 README
 lib/Games/GuessWord.pm
+t/chances.t
 t/simple.t
+t/wonlost.t
 t/words

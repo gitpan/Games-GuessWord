@@ -11,7 +11,7 @@ SYNOPSIS
       my @guesses = $g->guesses;
       $g->guess("t");
       # ...
-      if ($g->answer eq $g->secret) {
+      if ($g->won) {
         print "You won!\n";
         $g->new_word;
       }
@@ -31,21 +31,25 @@ METHODS
       # or...
       my $g = Games::GuessWord->new(file => "t/words");
 
+    You can also set the number of chances each game has with the chances
+    parameter
+
+      my $g = Games::GuessWord->new(file    => "t/words",
+                                    chances => 5);
+
   answer
 
     This method returns the current word being guessed, with asterisks (*)
     replacing letters that have not been guessed yet. For example, if trying
     to guess "buffy" and the letters "b" and "f" have been correctly
-    guessed, this will return "b*ff*". You should check if this is equal to
-    the secret, which indicates winning the game:
+    guessed, this will return "b*ff*".
 
       print  "Answer: " . $g->answer . "\n";
 
   chances
 
     This method returns the number of chances left. You start off with six
-    chances and loose a chance everytime you get a guess wrong. You should
-    check if this ever reaches zero, which indicates loosing the game:
+    chances by default and lose a chance everytime you get a guess wrong.
 
       print "Chances: " . $g->chances . "\n";
 
@@ -79,6 +83,21 @@ METHODS
     guess the word earlier on. The score persists over turns if you win:
 
       print   "Score: " . $g->score . "\n";
+
+  won
+
+    Returns true if and only if they have won the game, i.e. if the answer
+    equals the secret word.
+
+  lost
+
+    Returns true if and only if they have lost the game, i.e. if they have
+    no more chances left
+
+  starting_chances
+
+    Sets the number of starting chances, i.e. the number of chances the
+    player gets for each game. By default this is six.
 
 SHOWING YOUR APPRECIATION
     There was a thread on london.pm mailing list about working in a vacumn -

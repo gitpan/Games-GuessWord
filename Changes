@@ -1,8 +1,14 @@
 Revision history for Perl module Games::GuessWord
 
+0.15 Wed Feb  6 17:42:06 GMT 2002
+	- cope with case insensitivity
+	- wonderful patches by Mark Fowler which add the won, lost,
+	starting_chances methods (and tests) to simplify game logic
+
+
 0.14 Wed Jan  2 15:50:21 GMT 2002
 	- created and released first version as Games::WordGuess has
-	disapeared from CPAN. As a bonus, it's got a cleaner interface
+	disappeared from CPAN. As a bonus, it's got a cleaner interface
 	and uses less memory
 
 

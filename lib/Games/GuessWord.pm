@@ -2,7 +2,7 @@ package Games::GuessWord;
 use vars qw($VERSION);
 use strict;
 
-$VERSION = "0.14";
+$VERSION = "0.15";
 
 =head1 NAME
 
@@ -19,7 +19,7 @@ Games::GuessWord - Guess the letters in a word (ie Hangman)
   my @guesses = $g->guesses;
   $g->guess("t");
   # ...
-  if ($g->answer eq $g->secret) {
+  if ($g->won) {
     print "You won!\n";
     $g->new_word;
   }
@@ -41,6 +41,12 @@ wordlist. A random word is picked:
   # or...
   my $g = Games::GuessWord->new(file => "t/words");
 
+You can also set the number of chances each game has with the chances
+parameter
+
+  my $g = Games::GuessWord->new(file    => "t/words",
+                                chances => 5);
+
 =cut
 
 sub new {
@@ -51,6 +57,7 @@ sub new {
   $self->{score} = 0;
   $self->{words} = $conf{words};
   $self->{file} = $conf{file};
+  $self->{starting_chances} = $conf{chances} || 6;
 
   bless $self, $class;
   $self->new_word;
@@ -64,8 +71,7 @@ sub new {
 This method returns the current word being guessed, with asterisks (*)
 replacing letters that have not been guessed yet. For example, if
 trying to guess "buffy" and the letters "b" and "f" have been
-correctly guessed, this will return "b*ff*". You should check if this
-is equal to the secret, which indicates winning the game:
+correctly guessed, this will return "b*ff*".
 
   print  "Answer: " . $g->answer . "\n";
 
@@ -83,8 +89,7 @@ sub answer {
 =head2 chances
 
 This method returns the number of chances left. You start off with six
-chances and loose a chance everytime you get a guess wrong. You should
-check if this ever reaches zero, which indicates loosing the game:
+chances by default and lose a chance everytime you get a guess wrong.
 
   print "Chances: " . $g->chances . "\n";
 
@@ -157,10 +162,10 @@ sub new_word {
   }
   $secret = lc $secret;
   $self->{secret} = $secret;
-  $self->{chances} = 6;
+  $self->{chances} = $self->{starting_chances};
   $self->{guesses} = [];
 
-  $self->{score} = 0 if $self->secret eq $self->answer;
+  $self->{score} = 0 if $self->lost;
   1;
 }
 
@@ -194,6 +199,47 @@ sub score {
 }
 
 
+=head2 won
+
+Returns true if and only if they have won the game, i.e. if the
+answer equals the secret word.
+
+=cut
+
+sub won {
+  my $self = shift;
+  return $self->answer eq $self->secret
+}
+
+
+=head2 lost
+
+Returns true if and only if they have lost the game, i.e. if they
+have no more chances left
+
+=cut
+
+sub lost {
+  my $self = shift;
+  return $self->chances == 0;
+}
+
+=head2 starting_chances
+
+Sets the number of starting chances, i.e. the number of chances
+the player gets for each game.  By default this is six.
+
+=cut
+
+sub starting_chances {
+  my $self             = shift;
+  my $starting_chances = shift;
+
+  $self->{starting_chances} = $starting_chances;
+}
+
+
+
 =head1 SHOWING YOUR APPRECIATION
 
 There was a thread on london.pm mailing list about working in a vacumn
@@ -215,3 +261,5 @@ This module is free software; you can redistribute it or modify it
 under the same terms as Perl itself.
 
 =cut
+
+1;
