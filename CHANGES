@@ -1,5 +1,11 @@
 Revision history for Perl module Games::GuessWord
 
+0.16 Fri Dec 12 21:16:18 GMT 2008
+    - rename Changes to CHANGES
+    - add machine- and human-readable license
+    - use warnings
+    - add pod tests
+
 0.15 Wed Feb  6 17:42:06 GMT 2002
 	- cope with case insensitivity
 	- wonderful patches by Mark Fowler which add the won, lost,

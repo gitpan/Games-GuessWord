@@ -1,8 +1,8 @@
 package Games::GuessWord;
 use vars qw($VERSION);
 use strict;
-
-$VERSION = "0.15";
+use warnings;
+$VERSION = '0.16';
 
 =head1 NAME
 
@@ -255,7 +255,9 @@ Leon Brocard E<lt>F<acme@astray.com>E<gt>
 
 =head1 COPYRIGHT
 
-Copyright (C) 2001, Leon Brocard
+Copyright (C) 2001-8, Leon Brocard
+
+=head1 LICENSE
 
 This module is free software; you can redistribute it or modify it
 under the same terms as Perl itself.
